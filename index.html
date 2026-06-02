@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newstrength — Get Started</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Brand primaries */
+    --ns-blue:      #0050d9;
+    --ns-azure:     #00b0f0;
+    --ns-ink:       #030d20;
+    --ns-ink-800:   #0a1730;
+    --ns-ink-700:   #16233f;
+    --ns-ink-600:   #2a3a57;
+    --ns-ink-400:   #5b6b80;
+    --ns-white:     #ffffff;
+    --ns-cyan:      #40d0ff;
+    --ns-flame:     #ff5c00;
+    --ns-mist:      #e8f5ff;
+
+    /* Greys */
+    --ns-grey-500:  #6b7892;
+    --ns-grey-400:  #97a2b6;
+    --ns-grey-300:  #c4ccda;
+    --ns-grey-200:  #dde4ee;
+    --ns-grey-100:  #eef2f8;
+
+    /* Gradients */
+    --ns-grad-brand: linear-gradient(135deg, #0050d9 0%, #00b0f0 100%);
+    --ns-grad-deep:  linear-gradient(180deg, #0a2a52 0%, #030d20 100%);
+    --ns-grad-night: linear-gradient(160deg, #16335f 0%, #030d20 70%);
+
+    /* Semantic */
+    --brand:        var(--ns-blue);
+    --brand-hover:  #0042b3;
+    --brand-press:  #00368f;
+    --border:       rgba(255,255,255,0.1);
+    --border-light: var(--ns-grey-200);
+
+    /* Type */
+    --font-display: "Barlow Condensed", "Oswald", "Arial Narrow", sans-serif;
+    --font-body:    "Satoshi", "Inter", system-ui, -apple-system, sans-serif;
+
+    /* Radii */
+    --r-sm:   8px;
+    --r-md:   12px;
+    --r-lg:   18px;
+    --r-pill: 999px;
+
+    /* Spacing */
+    --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px;
+    --sp-6: 24px; --sp-8: 32px;
+
+    /* Shadows */
+    --shadow-sm:    0 1px 2px rgba(3,13,32,0.06), 0 1px 3px rgba(3,13,32,0.08);
+    --shadow-md:    0 4px 12px rgba(3,13,32,0.08), 0 2px 4px rgba(3,13,32,0.06);
+    --shadow-brand: 0 8px 24px rgba(0,80,217,0.32);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--ns-ink);
+    color: var(--ns-white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 1rem 4rem;
+    position: relative;
+    background: var(--ns-grad-deep);
+  }
+
+  /* Subtle grain texture overlay */
+  .app::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* Blue energy glow */
+  .blob {
+    position: fixed;
+    top: -240px;
+    right: -120px;
+    width: 560px;
+    height: 560px;
+    background: radial-gradient(circle, rgba(0,80,217,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob-2 {
+    position: fixed;
+    bottom: -200px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0,176,240,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .inner {
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    padding: 2rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ns-white);
+  }
+  .logo .strength { color: var(--ns-azure); }
+
+  .step-counter {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.08em;
+    font-weight: 400;
+  }
+
+  /* Progress rail */
+  .progress-rail {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+    max-width: 480px;
+    margin: 1rem 0 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .rail-seg {
+    flex: 1;
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 1px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .rail-seg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--ns-grad-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);
+  }
+
+  .rail-seg.done::after { transform: scaleX(1); }
+  .rail-seg.active::after { transform: scaleX(0.5); animation: pulse-rail 2s ease-in-out infinite; }
+
+  @keyframes pulse-rail {
+    0%, 100% { transform: scaleX(0.5); }
+    50% { transform: scaleX(0.7); }
+  }
+
+  /* Screen container */
+  .screen {
+    display: none;
+    flex-direction: column;
+    padding-top: 2.5rem;
+    animation: fadeUp 0.35s cubic-bezier(0.2,0.8,0.2,1) both;
+  }
+
+  .screen.active { display: flex; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Welcome screen */
+  .welcome-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,80,217,0.15);
+    color: var(--ns-azure);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: var(--r-pill);
+    border: 1px solid rgba(0,176,240,0.2);
+    margin-bottom: 1.5rem;
+    width: fit-content;
+  }
+
+  .display-heading {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(56px, 16vw, 80px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ns-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .display-heading .accent { color: var(--ns-azure); }
+
+  .welcome-body {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 2rem;
+    line-height: 1.65;
+    max-width: 340px;
+  }
+
+  /* Input fields */
+  .field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+
+  .field-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .field-input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--ns-white);
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+
+  .field-input::placeholder { color: rgba(255,255,255,0.2); }
+  .field-input:focus {
+    border-color: rgba(0,176,240,0.5);
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 0 3px rgba(0,80,217,0.2);
+  }
+
+  /* Platform toggle */
+  .platform-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 10px;
+    margin-top: 0.5rem;
+  }
+
+  .platform-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .platform-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px;
+    border-radius: var(--r-md);
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.4);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2,0.8,0.2,1);
+  }
+
+  .platform-btn svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+
+  .platform-btn:hover {
+    border-color: rgba(0,176,240,0.3);
+    color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .platform-btn.selected {
+    border-color: var(--ns-blue);
+    background: rgba(0,80,217,0.18);
+    color: var(--ns-azure);
+    box-shadow: 0 0 0 1px rgba(0,80,217,0.3);
+  }
+
+  /* Step screens */
+  .step-eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ns-azure);
+    margin-bottom: 1rem;
+  }
+
+  .step-heading {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(44px, 13vw, 64px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ns-white);
+    margin-bottom: 1rem;
+  }
+
+  .step-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+
+  /* App card */
+  .app-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    border-radius: var(--r-lg);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .app-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--r-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .app-icon-wrap svg { width: 28px; height: 28px; }
+
+  .app-card-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ns-white);
+    margin-bottom: 3px;
+  }
+
+  .app-card-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    background: var(--ns-grad-brand);
+    color: var(--ns-white);
+    border: none;
+    border-radius: var(--r-pill);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.2s;
+    text-decoration: none;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-brand);
+    letter-spacing: 0.01em;
+  }
+
+  .btn-primary:hover { opacity: 0.9; box-shadow: 0 12px 32px rgba(0,80,217,0.4); }
+  .btn-primary:active { transform: scale(0.97); opacity: 0.95; }
+  .btn-primary svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+  .btn-primary svg.stroke-icon {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .btn-ghost {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--r-pill);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2,0.8,0.2,1);
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.04);
+  }
+
+  /* Divider */
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0.5rem 0;
+    color: rgba(255,255,255,0.18);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+
+  .or-divider::before, .or-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+  }
+
+  /* Done screen */
+  .done-mark {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(0,80,217,0.15);
+    border: 1px solid rgba(0,176,240,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    animation: popIn 0.5s cubic-bezier(0.34,1.4,0.64,1) both;
+    box-shadow: 0 0 32px rgba(0,80,217,0.25);
+  }
+
+  .done-mark svg {
+    width: 28px; height: 28px;
+    stroke: var(--ns-azure);
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .checklist {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    border-radius: var(--r-lg);
+    padding: 1.25rem;
+    margin: 2rem 0;
+  }
+
+  .checklist-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 1rem;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+  }
+
+  .checklist-item:last-child { border-bottom: none; }
+
+  .checklist-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .checklist-icon.done { stroke: var(--ns-azure); }
+  .checklist-icon.pending { stroke: rgba(255,255,255,0.2); }
+
+  /* Back button */
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.35);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0 0 1.5rem 0;
+    transition: color 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn-back:hover { color: rgba(255,255,255,0.7); }
+
+  /* Name display */
+  .name-display {
+    color: var(--ns-azure);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="blob"></div>
+<div class="blob-2"></div>
+<div class="app">
+
+  <div class="header">
+    <div class="logo">NEW<span class="strength">STRENGTH</span></div>
+    <div class="step-counter" id="stepCounter">Get started</div>
+  </div>
+
+  <div class="progress-rail" id="progressRail">
+    <div class="rail-seg" id="seg0"></div>
+    <div class="rail-seg" id="seg1"></div>
+    <div class="rail-seg" id="seg2"></div>
+    <div class="rail-seg" id="seg3"></div>
+  </div>
+
+  <div class="inner">
+
+    <!-- Screen 0: Welcome -->
+    <div class="screen active" id="screen-0">
+      <div class="welcome-tag">New member setup</div>
+      <h1 class="display-heading">WELCOME<br>TO<br><span class="accent">NEWSTRENGTH</span></h1>
+      <p class="welcome-body">Four quick steps to have everything you need to get started.</p>
+
+      <div class="field-group">
+        <div class="field-label">Your first name</div>
+        <input class="field-input" type="text" id="nameInput" placeholder="e.g. Sarah" autocomplete="given-name">
+      </div>
+
+      <div class="platform-label">Your device</div>
+      <div class="platform-toggle">
+        <button class="platform-btn selected" id="btnIOS" onclick="selectPlatform('ios')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          iPhone
+        </button>
+        <button class="platform-btn" id="btnAndroid" onclick="selectPlatform('android')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16.61 15.15C16.15 15.15 15.77 14.78 15.77 14.32S16.15 13.5 16.61 13.5H16.61C17.07 13.5 17.45 13.86 17.45 14.32C17.45 14.78 17.07 15.15 16.61 15.15M7.41 15.15C6.95 15.15 6.57 14.78 6.57 14.32C6.57 13.86 6.95 13.5 7.41 13.5H7.41C7.87 13.5 8.24 13.86 8.24 14.32C8.24 14.78 7.87 15.15 7.41 15.15M16.91 10.14L18.58 7.26C18.68 7.09 18.63 6.86 18.46 6.76C18.29 6.66 18.06 6.7 17.96 6.87L16.27 9.77C14.93 9.17 13.5 8.88 12 8.89C10.5 8.88 9.07 9.17 7.73 9.77L6.04 6.87C5.94 6.7 5.71 6.65 5.54 6.76C5.37 6.86 5.32 7.09 5.42 7.26L7.09 10.14C4.55 11.58 2.86 14.22 3 17.24H21C21.14 14.22 19.45 11.58 16.91 10.14Z"/></svg>
+          Android
+        </button>
+      </div>
+
+      <button class="btn-primary" onclick="startFlow()">
+        <svg class="stroke-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Let's go
+      </button>
+    </div>
+
+    <!-- Screen 1: NS App -->
+    <div class="screen" id="screen-1">
+      <button class="btn-back" onclick="goToStep(0)">← Back</button>
+      <div class="step-eyebrow">Step 1 of 4</div>
+      <h2 class="step-heading">THE<br>NEWSTRENGTH<br>APP.</h2>
+      <p class="step-body">Book classes, personal training and stay up to date. Download and sign in with the details you set up your Mindbody account with.</p>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="padding: 0;">
+          <img src="icon-newstrength.png" width="56" height="56" style="border-radius:14px;display:block;" alt="Newstrength">
+        </div>
+        <div>
+          <div class="app-card-name">Newstrength</div>
+          <div class="app-card-sub">Book · Train · Manage</div>
+        </div>
+      </div>
+
+      <a class="btn-primary" id="nsAppLink" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;" id="nsAppIcon"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <span id="nsAppLabel">Download on the App Store</span>
+      </a>
+      <div class="or-divider">already have it?</div>
+      <button class="btn-ghost" onclick="nextStep()">I've downloaded it and logged in →</button>
+    </div>
+
+    <!-- Screen 2: TeamBuildr -->
+    <div class="screen" id="screen-2">
+      <button class="btn-back" onclick="goToStep(1)">← Back</button>
+      <div class="step-eyebrow">Step 2 of 4</div>
+      <h2 class="step-heading">ACCESS<br>YOUR<br>PROGRAM.</h2>
+      <p class="step-body">Your personalised training program lives here on TeamBuildr. Download this and use the details in the email you've previously received.</p>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="padding: 0;">
+          <img src="icon-teambuildr.png" width="56" height="56" style="border-radius:14px;display:block;" alt="TeamBuildr">
+        </div>
+        <div>
+          <div class="app-card-name">TeamBuildr</div>
+          <div class="app-card-sub">Training programs · Workouts</div>
+        </div>
+      </div>
+
+      <a class="btn-primary" id="tbLink" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;" id="tbIcon"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <span id="tbLabel">Download on the App Store</span>
+      </a>
+      <div class="or-divider">already have it?</div>
+      <button class="btn-ghost" onclick="nextStep()">I've downloaded it →</button>
+    </div>
+
+    <!-- Screen 3: WhatsApp -->
+    <div class="screen" id="screen-3">
+      <button class="btn-back" onclick="goToStep(2)">← Back</button>
+      <div class="step-eyebrow">Step 3 of 4</div>
+      <h2 class="step-heading">JOIN THE<br>COMMUNITY.</h2>
+      <p class="step-body">Join our WhatsApp community for all our updates, challenges and more.</p>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="padding: 0;">
+          <img src="icon-whatsapp.png" width="56" height="56" style="border-radius:14px;display:block;" alt="WhatsApp">
+        </div>
+        <div>
+          <div class="app-card-name">WhatsApp Community</div>
+          <div class="app-card-sub">Connect · Updates · Wins</div>
+        </div>
+      </div>
+
+      <a class="btn-primary" href="https://chat.whatsapp.com/KVtfubHhWa95vHxHCQD5If" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.895.524 3.67 1.438 5.186L2.018 22l4.946-1.397A9.956 9.956 0 0011.999 22c5.523 0 10-4.477 10-10S17.522 2 11.999 2zm0 18c-1.7 0-3.285-.455-4.651-1.247l-.334-.198-3.455.976.938-3.374-.216-.347A7.954 7.954 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+        Join the community
+      </a>
+      <div class="or-divider">already a member?</div>
+      <button class="btn-ghost" onclick="nextStep()">I've joined →</button>
+    </div>
+
+    <!-- Screen 4: Book first session -->
+    <div class="screen" id="screen-4">
+      <button class="btn-back" onclick="goToStep(3)">← Back</button>
+      <div class="step-eyebrow">Step 4 of 4</div>
+      <h2 class="step-heading">LOCK<br>IT IN.</h2>
+      <p class="step-body" id="bookingBody">You're almost there. Open the Newstrength app and book your first session. Your coach will be expecting you.</p>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="background: rgba(0,80,217,0.18);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00b0f0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="app-card-name">Book your first session</div>
+          <div class="app-card-sub">Opens in the Newstrength app</div>
+        </div>
+      </div>
+
+      <a class="btn-primary" id="bookingLink" href="#" target="_blank" rel="noopener" onclick="setTimeout(nextStep, 1500)">
+        <svg class="stroke-icon" viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Book now
+      </a>
+    </div>
+
+    <!-- Screen 5: Done -->
+    <div class="screen" id="screen-5">
+      <div class="done-mark">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 class="step-heading">YOU'RE<br>ALL SET<span style="color:var(--ns-azure)">.</span></h2>
+      <p class="step-body" id="doneBody">Welcome to the family. We can't wait to see you on the floor.</p>
+
+      <div class="checklist">
+        <div class="checklist-title">What's next</div>
+        <div class="checklist-item">
+          <svg class="checklist-icon done" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Newstrength app downloaded and ready
+        </div>
+        <div class="checklist-item">
+          <svg class="checklist-icon done" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          TeamBuildr set up — your program is coming
+        </div>
+        <div class="checklist-item">
+          <svg class="checklist-icon done" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          WhatsApp community joined
+        </div>
+        <div class="checklist-item">
+          <svg class="checklist-icon pending" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+          Your coach will reach out before your first class
+        </div>
+        <div class="checklist-item">
+          <svg class="checklist-icon pending" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+          Introduce yourself in the WhatsApp community
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let platform = 'ios';
+  let userName = '';
+  let currentStep = 0;
+
+  const links = {
+    ns: {
+      ios: 'https://apps.apple.com/au/app/newstrength/id6749242801',
+      android: 'https://play.google.com/store/apps/details?id=com.fitnessmobileapps.newstrength42412&hl=en_AU'
+    },
+    tb: {
+      ios: 'https://apps.apple.com/au/app/teambuildr-training/id1588729407',
+      android: 'https://play.google.com/store/apps/details?id=com.teambuildr.reactnative.android.production&hl=en_AU'
+    },
+    booking: {
+      ios: 'https://apps.apple.com/au/app/newstrength/id6749242801',
+      android: 'https://play.google.com/store/apps/details?id=com.fitnessmobileapps.newstrength42412&hl=en_AU'
+    }
+  };
+
+  const iosIconPath = 'M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z';
+  const androidIconPath = 'M16.61 15.15C16.15 15.15 15.77 14.78 15.77 14.32S16.15 13.5 16.61 13.5H16.61C17.07 13.5 17.45 13.86 17.45 14.32C17.45 14.78 17.07 15.15 16.61 15.15M7.41 15.15C6.95 15.15 6.57 14.78 6.57 14.32C6.57 13.86 6.95 13.5 7.41 13.5H7.41C7.87 13.5 8.24 13.86 8.24 14.32C8.24 14.78 7.87 15.15 7.41 15.15M16.91 10.14L18.58 7.26C18.68 7.09 18.63 6.86 18.46 6.76C18.29 6.66 18.06 6.7 17.96 6.87L16.27 9.77C14.93 9.17 13.5 8.88 12 8.89C10.5 8.88 9.07 9.17 7.73 9.77L6.04 6.87C5.94 6.7 5.71 6.65 5.54 6.76C5.37 6.86 5.32 7.09 5.42 7.26L7.09 10.14C4.55 11.58 2.86 14.22 3 17.24H21C21.14 14.22 19.45 11.58 16.91 10.14Z';
+
+  function selectPlatform(p) {
+    platform = p;
+    document.getElementById('btnIOS').classList.toggle('selected', p === 'ios');
+    document.getElementById('btnAndroid').classList.toggle('selected', p === 'android');
+  }
+
+  function startFlow() {
+    const nameVal = document.getElementById('nameInput').value.trim();
+    userName = nameVal || 'there';
+    setLinks();
+    goToStep(1);
+  }
+
+  function setLinks() {
+    document.getElementById('nsAppLink').href = links.ns[platform];
+    document.getElementById('tbLink').href = links.tb[platform];
+    document.getElementById('bookingLink').href = links.booking[platform];
+
+    const isIOS = platform === 'ios';
+    const storeLabel = isIOS ? 'Download on the App Store' : 'Get it on Google Play';
+    const iconPath = isIOS ? iosIconPath : androidIconPath;
+
+    document.getElementById('nsAppLabel').textContent = storeLabel;
+    document.getElementById('tbLabel').textContent = storeLabel;
+    document.getElementById('nsAppIcon').innerHTML = `<path d="${iconPath}"/>`;
+    document.getElementById('tbIcon').innerHTML = `<path d="${iconPath}"/>`;
+  }
+
+  function nextStep() { goToStep(currentStep + 1); }
+
+  function goToStep(step) {
+    document.getElementById('screen-' + currentStep).classList.remove('active');
+    currentStep = step;
+    const screen = document.getElementById('screen-' + step);
+    screen.classList.add('active');
+    screen.style.animation = 'none';
+    screen.offsetHeight;
+    screen.style.animation = '';
+
+    updateProgress(step);
+
+    if (step === 4) {
+      const body = document.getElementById('bookingBody');
+      if (userName && userName !== 'there') {
+        body.innerHTML = `You're almost there, <span class="name-display">${userName}</span>. Open the Newstrength app and book your first session. Your coach will be expecting you.`;
+      }
+    }
+
+    if (step === 5 && userName && userName !== 'there') {
+      document.getElementById('doneBody').textContent = `Welcome to the family, ${userName}. We can't wait to see you on the floor.`;
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress(step) {
+    const segs = ['seg0','seg1','seg2','seg3'];
+    if (step === 0) {
+      segs.forEach(s => { document.getElementById(s).className = 'rail-seg'; });
+      document.getElementById('stepCounter').textContent = 'Get started';
+      return;
+    }
+    if (step === 5) {
+      segs.forEach(s => { document.getElementById(s).className = 'rail-seg done'; });
+      document.getElementById('stepCounter').textContent = 'Complete';
+      return;
+    }
+    segs.forEach((s, i) => {
+      const el = document.getElementById(s);
+      if (i < step - 1) el.className = 'rail-seg done';
+      else if (i === step - 1) el.className = 'rail-seg active';
+      else el.className = 'rail-seg';
+    });
+    document.getElementById('stepCounter').textContent = 'Step ' + step + ' of 4';
+  }
+</script>
+</body>
+</html>
